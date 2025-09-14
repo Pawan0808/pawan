@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details - Shree Murlidhar Lifescience</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c6e49;
+            --secondary: #4c956c;
+            --accent: #fefee3;
+            --light: #f9f9f9;
+            --dark: #1d3557;
+            --transition: all 0.4s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            padding-top: 80px;
+        }
+        
+        /* Navigation */
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 15px 0;
+            transition: var(--transition);
+        }
+        
+        .navbar.scrolled {
+            padding: 8px 0;
+        }
+        
+        .navbar-brand {
+            font-weight: 800;
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+        
+        .nav-link {
+            color: var(--dark);
+            font-weight: 500;
+            margin: 0 10px;
+            position: relative;
+            transition: var(--transition);
+        }
+        
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
+        
+        .nav-link:hover {
+            color: var(--primary);
+        }
+        
+        .nav-link:hover:after {
+            width: 100%;
+        }
+        
+        /* Product Details */
+        .product-details {
+            padding: 60px 0;
+        }
+        
+        .product-image {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: auto;
+            transition: transform 0.5s ease;
+        }
+        
+        .product-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        .product-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .product-description {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+        
+        .product-features {
+            margin-bottom: 30px;
+        }
+        
+        .feature-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .feature-list li {
+            margin-bottom: 12px;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .feature-list li:before {
+            content: '\f00c';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            color: var(--primary);
+            position: absolute;
+            left: 0;
+        }
+        
+        .product-meta {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+        }
+        
+        .meta-item {
+            margin-bottom: 15px;
+            display: flex;
+        }
+        
+        .meta-label {
+            font-weight: 600;
+            min-width: 120px;
+            color: var(--dark);
+        }
+        
+        .action-buttons {
+            margin-top: 30px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary);
+            border-color: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .related-products {
+            padding: 60px 0;
+            background-color: #f8f9fa;
+        }
+        
+        .related-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        .product-card {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: var(--transition);
+            height: 100%;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+        }
+        
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .product-card-body {
+            padding: 20px;
+        }
+        
+        .product-card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .breadcrumb {
+            margin-bottom: 30px;
+        }
+        
+        .loading-spinner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50vh;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .error-message {
+            text-align: center;
+            padding: 60px 0;
+        }
+        
+        /* Back to top */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            height: 50px;
+            width: 50px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            transition: var(--transition);
+            opacity: 0;
+            visibility: hidden;
+            z-index: 999;
+        }
+        
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: var(--secondary);
+            transform: translateY(-5px);
+        }
+        
+        @media (max-width: 768px) {
+            .product-title {
+                font-size: 1.8rem;
+            }
+            
+            .meta-item {
+                flex-direction: column;
+            }
+            
+            .meta-label {
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjYwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjx0ZXh0IHg9IjEwIiB5PSIzNSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXdlaWdodD0iNzAwIiBmb250LXNpemU9IjIyIiBmaWxsPSIjMmM2ZTQ5Ij5TTUwgTElGRVNJRU5DRTwvdGV4dD48L3N2Zz4=" alt="SML Lifescience" height="40">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">HOME</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#about">ABOUT</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#products">PRODUCTS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#contact">CONTACT</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Back to top -->
+    <a href="#" class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <!-- Product Details Section -->
+    <section class="product-details">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item"><a href="index.html#products">Products</a></li>
+                    <li class="breadcrumb-item active" id="product-breadcrumb">Product Details</li>
+                </ol>
+            </nav>
+            
+            <div id="product-details-container">
+                <div class="loading-spinner">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Products -->
+    <section class="related-products">
+        <div class="container">
+            <h2 class="related-title">Related Products</h2>
+            <div class="row" id="related-products-container">
+                <!-- Related products will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Product database - In a real application, this would come from a backend API
+        const products = [
+            {
+                id: 1,
+                name: "Ragi Malt",
+                image: "https://images.unsplash.com/photo-1597074866923-dc058915f8c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                description: "Our Ragi Malt is a nutritious and delicious health drink made from finest quality ragi (finger millet). It is rich in calcium, fiber, and essential vitamins, making it an ideal supplement for all age groups.",
+                benefits: [
+                    "High in calcium for strong bones and teeth",
+                    "Rich in dietary fiber for better digestion",
+                    "Packed with essential vitamins and minerals",
+                    "Helps in managing diabetes due to low glycemic index",
+                    "Provides sustained energy release"
+                ],
+                features: [
+                    "Available in multiple flavors: Original, Chocolate, Elaichi",
+                    "100% natural with no preservatives",
+                    "Easy to prepare - just mix with hot water or milk",
+                    "Suitable for vegetarians"
+                ],
+                usage: "Mix 2-3 tablespoons of Ragi Malt in a cup of hot water or milk. Stir well and enjoy. Can be consumed twice daily.",
+                packaging: "200g, 500g, and 1kg packs available",
+                certifications: "FSSAI Certified, ISO 22000:2018",
+                category: "health-drinks"
+            },
+            {
+                id: 2,
+                name: "Peptide Protein Supplement",
+                image: "https://images.unsplash.com/photo-1593062096033-9c26cd4391af?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                description: "Our premium Peptide Protein Supplement is scientifically formulated to support muscle recovery and growth. It contains hydrolyzed whey protein that is pre-digested for faster absorption.",
+                benefits: [
+                    "Promotes muscle recovery after workouts",
+                    "Supports lean muscle growth",
+                    "Enhances muscle protein synthesis",
+                    "Provides essential amino acids",
+                    "Easy to digest and absorb"
+                ],
+                features: [
+                    "Hydrolyzed whey protein for fast absorption",
+                    "24g protein per serving",
+                    "Low in fat and sugar",
+                    "Available in Chocolate, Vanilla, and Strawberry flavors"
+                ],
+                usage: "Mix one scoop with 250ml of water or milk. Shake well and consume post-workout or as directed by your nutritionist.",
+                packaging: "1kg and 2kg tubs",
+                certifications: "Informed Choice Certified, ISO 9001:2015",
+                category: "protein-supplements"
+            },
+            {
+                id: 3,
+                name: "Immune Support Supplement",
+                image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                description: "Boost your natural defense system with our Immune Support Supplement. This powerful formulation contains a blend of vitamins, minerals, and herbal extracts known to support immune function.",
+                benefits: [
+                    "Strengthens immune system function",
+                    "Provides antioxidant protection",
+                    "Supports respiratory health",
+                    "Enhances natural defense mechanisms",
+                    "Promotes overall wellness"
+                ],
+                features: [
+                    "Contains Vitamin C, Zinc, and Elderberry extract",
+                    "Includes Ayurvedic herbs: Tulsi, Giloy, Ashwagandha",
+                    "Vegetarian capsules",
+                    "No artificial colors or preservatives"
+                ],
+                usage: "Take 1 capsule twice daily with water, or as directed by your healthcare practitioner.",
+                packaging: "60 capsules per bottle",
+                certifications: "FSSAI Certified, GMP Certified",
+                category: "immunity-boosters"
+            },
+            {
+                id: 4,
+                name: "Cardio Care Supplement",
+                image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                description: "Support your cardiovascular health with our specially formulated Cardio Care Supplement. This advanced formula contains nutrients that help maintain healthy cholesterol levels, blood pressure, and overall heart function.",
+                benefits: [
+                    "Supports healthy cholesterol levels",
+                    "Promotes normal blood pressure",
+                    "Provides antioxidant protection for cardiovascular system",
+                    "Helps maintain healthy circulation",
+                    "Supports overall heart health"
+                ],
+                features: [
+                    "Contains Omega-3 fatty acids, CoQ10, and Garlic extract",
+                    "Includes plant sterols and soluble fiber",
+                    "Double strength formulation",
+                    "Easy-to-swallow softgels"
+                ],
+                usage: "Take 1 softgel twice daily with meals, or as directed by your healthcare provider.",
+                packaging: "60 softgels per bottle",
+                certifications: "USP Verified, FSSAI Certified",
+                category: "heart-health"
+            },
+            {
+                id: 5,
+                name: "Energy Drink Mix",
+                image: "https://images.unsplash.com/photo-1593030103066-0093718efeb9?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                description: "Our Energy Drink Mix provides a natural energy boost without the crash associated with caffeine-heavy products. Formulated with B-vitamins, green tea extract, and natural energizers.",
+                benefits: [
+                    "Provides sustained energy without jitters",
+                    "Enhances mental alertness and focus",
+                    "Supports physical endurance",
+                    "Contains antioxidants",
+                    "Hydrates while energizing"
+                ],
+                features: [
+                    "Natural caffeine from green tea extract",
+                    "Contains B-vitamins for energy metabolism",
+                    "Electrolytes for hydration",
+                    "Available in Lemon, Orange, and Berry flavors",
+                    "Low calorie - only 15 calories per serving"
+                ],
+                usage: "Mix one packet with 500ml of water. Shake well and consume when needing an energy boost, preferably before or during physical activity.",
+                packaging: "10 individual serving packets per box",
+                certifications: "Informed Sport Certified, FSSAI Certified",
+                category: "energy-boosters"
+            },
+            {
+                id: 6,
+                name: "Curcumin Supplements",
+                image: "https://images.unsplash.com/photo-1582496363284-89b50d013f52?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                description: "Harness the power of turmeric with our high-potency Curcumin Supplements. Featuring enhanced bioavailability, our formula delivers the anti-inflammatory and antioxidant benefits of curcumin effectively.",
+                benefits: [
+                    "Powerful anti-inflammatory properties",
+                    "Provides antioxidant protection",
+                    "Supports joint health and mobility",
+                    "Promotes recovery from exercise-induced inflammation",
+                    "Supports digestive health"
+                ],
+                features: [
+                    "95% curcuminoids for maximum potency",
+                    "Enhanced with black pepper extract for better absorption",
+                    "Pharmaceutical-grade formulation",
+                    "Vegetarian capsules",
+                    "No artificial additives"
+                ],
+                usage: "Take 1 capsule twice daily with meals, or as directed by your healthcare practitioner.",
+                packaging: "60 capsules per bottle",
+                certifications: "USP Verified, GMP Certified",
+                category: "ayurvedic"
+            }
+        ];
+
+        // Get product ID from URL parameters
+        function getProductIdFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return parseInt(urlParams.get('id'));
+        }
+
+        // Find product by ID
+        function findProductById(id) {
+            return products.find(product => product.id === id);
+        }
+
+        // Get related products (excluding current product)
+        function getRelatedProducts(currentProductId, category, limit = 3) {
+            return products
+                .filter(product => product.id !== currentProductId && product.category === category)
+                .slice(0, limit);
+        }
+
+        // Render product details
+        function renderProductDetails(product) {
+            const container = document.getElementById('product-details-container');
+            
+            if (!product) {
+                container.innerHTML = `
+                    <div class="error-message">
+                        <i class="fas fa-exclamation-circle" style="font-size: 3rem; color: #dc3545; margin-bottom: 20px;"></i>
+                        <h2>Product Not Found</h2>
+                        <p>The product you're looking for doesn't exist.</p>
+                        <a href="index.html#products" class="btn btn-primary mt-3">Back to Products</a>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Update breadcrumb
+            document.getElementById('product-breadcrumb').textContent = product.name;
+            
+            // Update page title
+            document.title = `${product.name} - Shree Murlidhar Lifescience`;
+            
+            container.innerHTML = `
+                <div class="row">
+                    <div class="col-lg-6 mb-5">
+                        <div class="product-image">
+                            <img src="${product.image}" alt="${product.name}">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <h1 class="product-title">${product.name}</h1>
+                        <p class="product-description">${product.description}</p>
+                        
+                        <div class="product-features">
+                            <h4>Key Benefits</h4>
+                            <ul class="feature-list">
+                                ${product.benefits.map(benefit => `<li>${benefit}</li>`).join('')}
+                            </ul>
+                        </div>
+                        
+                        <div class="product-features">
+                            <h4>Product Features</h4>
+                            <ul class="feature-list">
+                                ${product.features.map(feature => `<li>${feature}</li>`).join('')}
+                            </ul>
+                        </div>
+                        
+                        <div class="product-meta">
+                            <h4 class="mb-4">Product Details</h4>
+                            <div class="meta-item">
+                                <span class="meta-label">Usage:</span>
+                                <span>${product.usage}</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Packaging:</span>
+                                <span>${product.packaging}</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Certifications:</span>
+                                <span>${product.certifications}</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Category:</span>
+                                <span>${product.category.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <a href="index.html#contact" class="btn btn-primary me-3">
+                                <i class="fas fa-envelope me-2"></i>Inquire Now
+                            </a>
+                            <a href="index.html#products" class="btn btn-outline-primary">
+                                <i class="fas fa-arrow-left me-2"></i>Back to Products
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Render related products
+        function renderRelatedProducts(relatedProducts) {
+            const container = document.getElementById('related-products-container');
+            
+            if (relatedProducts.length === 0) {
+                container.innerHTML = '<p class="text-center">No related products found.</p>';
+                return;
+            }
+            
+            container.innerHTML = relatedProducts.map(product => `
+                <div class="col-md-4 mb-4">
+                    <div class="product-card">
+                        <img src="${product.image}" alt="${product.name}">
+                        <div class="product-card-body">
+                            <h3 class="product-card-title">${product.name}</h3>
+                            <p>${product.description.substring(0, 100)}...</p>
+                            <a href="product-details.html?id=${product.id}" class="btn btn-sm btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            const productId = getProductIdFromUrl();
+            const product = findProductById(productId);
+            
+            renderProductDetails(product);
+            
+            if (product) {
+                const relatedProducts = getRelatedProducts(productId, product.category);
+                renderRelatedProducts(relatedProducts);
+            }
+            
+            // Navbar scroll effect
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.navbar');
+                const backToTop = document.querySelector('.back-to-top');
+                
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                    backToTop.classList.add('active');
+                } else {
+                    navbar.classList.remove('scrolled');
+                    backToTop.classList.remove('active');
+                }
+            });
+            
+            // Smooth scrolling for back to top
+            document.querySelector('.back-to-top').addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
